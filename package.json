@@ -4,7 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node backend/server.js"
+    "start": "node backend/server.js",
+    "server":"nodemon backend/server.js",
+    "client":"npm start --perfix ./frontend",
+    "dev":"concurrently \"npm run start\" \"npm run client\""
   },
   "author": "Devashish Anil Deshmukh",
   "license": "ISC",

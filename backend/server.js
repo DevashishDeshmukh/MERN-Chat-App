@@ -6,6 +6,7 @@ const chatRoutes = require("./routes/chatRoutes")
 const userRoutes = require("./routes/userRoutes")
 const messageRoutes = require("./routes/messageRoutes")
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
+const path =require('path');
 
 const app =express();
 connectDB();
@@ -14,6 +15,9 @@ app.use(
     express.urlencoded({extended:true})
 );
 app.use(express.json()); // to accept JSON Data
+
+app.use(express.static(path.join(__dirname,'../frontend/build')))
+
 
 //USE POSTMAN FOR TESTING THE APIS 
 //Just to check if api is working 
@@ -38,6 +42,34 @@ app.get('/', (req,res)=>{
 app.use('/api/user', userRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/message', messageRoutes);
+
+
+
+
+app.use('*',function(req,res){
+  res.sendFile(path.join(__dirname,'../frontend/build/index.html'));
+});
+
+// // --------------------------deployment------------------------------
+
+// const __dirname1 = path.resolve();
+
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname1, "/frontend/build")));
+
+//   app.get("*", (req, res) =>
+//     res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"))
+//   );
+// } else {
+//   app.get("/", (req, res) => {
+//     res.send("API is running..");
+//   });
+// }
+
+// // --------------------------deployment------------------------------
+
+
+
 
 
 
